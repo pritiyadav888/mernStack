@@ -23,3 +23,9 @@ Possible Errors in case of xcode issues-
 
 <img width="1381" alt="Screen Shot 2022-10-17 at 11 16 13 AM" src="https://user-images.githubusercontent.com/68044440/196303020-89ea10a1-e84b-4933-9225-5c5fb77a753b.png">
 
+
+Refresh the app to resolve this issue-
+
+<img width="804" alt="Screen Shot 2022-10-17 at 5 15 44 PM" src="https://user-images.githubusercontent.com/68044440/196306998-10b5e27f-179e-4256-af12-71c1b6274728.png">
+
+
