@@ -5,7 +5,9 @@ Steps to get started-
 ## macOS > iOS
 
 brew install node
+
 brew install watchman
+
 pod install
 
 You will also need to install the Xcode Command Line Tools. Open Xcode, then choose "Preferences..." from the Xcode menu. Go to the Locations panel and install the tools by selecting the most recent version in the Command Line Tools dropdown.
