@@ -13,6 +13,7 @@ You will also need to install the Xcode Command Line Tools. Open Xcode, then cho
 <img width="947" alt="Screen Shot 2022-10-17 at 4 35 33 PM" src="https://user-images.githubusercontent.com/68044440/196302799-e7a59085-4622-43a1-9a88-03179ac82b33.png">
 
 npx react-native start
+
 npx react-native run-ios
 
 
