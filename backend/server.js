@@ -2,20 +2,27 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.use((req, res, next)=>{
-    console.log('something')
-    next()
+const apiRoutes = require("./routes/apiRoutes")
+
+app.get('/', (req, res) => {
+    res.json({message: "API running..."})
 })
-app.get('/', (req, res, next) => {
-    console.log('something 1')
-   
-  res.send('Hello Worldvvvv!')
-  next()
+
+// mongodb connection
+const connectDB = require("./config/db")
+connectDB();
+
+app.use('/api', apiRoutes)
+
+app.use((error, req, res, next) => {
+    console.error(error);
+    next(error)
 })
-app.get('/two', (req, res, next) => {
-    console.log('something 2')
-    res.send('Hello Worldvvvv!')
-    next()
+app.use((error, req, res, next) => {
+    res.status(500).json({
+        message: error.message,
+        stack: error.stack
+    })
 })
 
 app.listen(port, () => {
