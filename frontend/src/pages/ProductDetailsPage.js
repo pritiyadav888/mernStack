@@ -88,14 +88,14 @@ const ProductDetailsPage = () => {
               <Form.Label>Write a review</Form.Label>
               <Form.Control as="textarea" rows={3} />
             </Form.Group>
-            <Form.Select aria-label="Default select example">
+            {/* <Form.Select aria-label="Default select example">
               <option>Your rating</option>
               <option value="5">5 (very good)</option>
               <option value="4">4 (good)</option>
               <option value="3">3 (average)</option>
               <option value="2">2 (bad)</option>
               <option value="1">1 (awful)</option>
-            </Form.Select>
+            </Form.Select> */}
             <Button className="mb-3 mt-3" variant="primary">
               Submit
             </Button>
