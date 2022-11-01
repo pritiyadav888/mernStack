@@ -9,29 +9,53 @@ const getUsers = async (req, res, next) => {
   }
 };
 
+// const registerUser = async (req, res, next) => {
+//   try {
+//     const { name, lastName, email, password } = req.body;
+//     if (!(name && lastName && email && password)) {
+//       return res.status(400).send("All inputs are required");
+//     }
+
+//     const userExists = await User.findOne({ email });
+//     if (userExists) {
+//       return res.status(400).json({ error: "user exists" });
+//     } else {
+//       const user = await User.create({
+//         name,
+//         lastName,
+//         email: email.toLowerCase(),
+//         password: password
+//       });
+//       res.status(201).send(user)
+//     }
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
 const registerUser = async (req, res, next) => {
   try {
-    const { name, lastName, email, password } = req.body;
-    if (!(name && lastName && email && password)) {
-      return res.status(400).send("All inputs are required");
+    const {name, lastName, email, password} = req.body
+    if(!(name && lastName && email && password)){
+      return res.status(400).send("All inputs are required!")
     }
-
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({ error: "user exists" });
-    } else {
+    const userExists = await User.findOne({email});
+    if(userExists){
+      return res.status(400).json({error:"User exists"});
+    }else{
       const user = await User.create({
         name,
         lastName,
-        email: email.toLowerCase(),
-        password: password
+        email:email.toLowerCase(),
+        password:password
       });
       res.status(201).send(user)
     }
-  } catch (err) {
-    next(err);
+
+  } catch (error) {
+    next(error)
   }
-};
+}
 
 module.exports = {getUsers, registerUser};
 
