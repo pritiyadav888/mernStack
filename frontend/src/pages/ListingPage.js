@@ -4,10 +4,11 @@ import PriceFilterComponent from "../components/filterQueryResultOptions/PriceFi
 import CategoryFilterComponent from "../components/filterQueryResultOptions/CategoryFilterComponent";
 import ProductForListComponent from "../components/ProductForListComponent";
 import PaginationComponent from "../components/PaginationComponent";
-
+import axios from "axios";
 // import RatingFilterComponent from "../components/filterQueryResultOptions/RatingFilterComponent";
 
 const ListingPage = () => {
+    axios.get("/api/products").then((res) => console.log(res));
   return (
     <Container fluid>
       <Row>

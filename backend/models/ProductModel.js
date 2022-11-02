@@ -33,10 +33,6 @@ const productSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    attrs: [
-        {key: {type: String}, value: {type: String}}
-        // [{ key: "color", value: "red" }, { key: "size", value: "1 TB" }]
-    ],
     images: [imageSchema],
     reviews: [
         {
