@@ -17,4 +17,3 @@ router.get("/admin", getOrders);
 router.get("/analysis/:date", getOrderForAnalysis);
 
 module.exports = router
-

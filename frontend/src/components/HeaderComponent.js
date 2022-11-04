@@ -5,72 +5,140 @@ import {
   NavDropdown,
   Badge,
   Form,
-  Dropdown,
   DropdownButton,
+  Dropdown,
   Button,
   InputGroup,
 } from "react-bootstrap";
-// import NavbarCollapse from './NavbarCollapse';
-import '../index.css';
+
 import { LinkContainer } from "react-router-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../redux/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getCategories } from "../redux/actions/categoryActions";
+import socketIOClient from "socket.io-client";
+import { setChatRooms, setSocket, setMessageReceived, removeChatRoom } from "../redux/actions/chatActions";
+
 const HeaderComponent = () => {
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.userRegisterLogin);
+  const itemsCount = useSelector((state) => state.cart.itemsCount);
+  const { categories } = useSelector((state) => state.getCategories);
+  const { messageReceived } = useSelector((state) => state.adminChat);
+
+  const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
+
+  const submitHandler = (e) => {
+     if (e.keyCode && e.keyCode !== 13) return;
+     e.preventDefault();
+     if (searchQuery.trim()) {
+         if (searchCategoryToggle === "All") {
+             navigate(`/product-list/search/${searchQuery}`);
+         } else {
+             navigate(`/product-list/category/${searchCategoryToggle.replaceAll("/", ",")}/search/${searchQuery}`);
+         }
+     } else if (searchCategoryToggle !== "All") {
+         navigate(`/product-list/category/${searchCategoryToggle.replaceAll("/", ",")}`);
+     } else {
+         navigate("/product-list");
+     }
+  }
+
+  useEffect(() => {
+      if (userInfo.isAdmin) {
+          var audio = new Audio("/audio/chat-msg.mp3");
+          const socket = socketIOClient();
+          socket.emit("admin connected with server", "Admin" + Math.floor(Math.random() * 1000000000000));
+          socket.on("server sends message from client to admin", ({user, message}) => {
+              dispatch(setSocket(socket));
+        //   let chatRooms = {
+        //     fddf54gfgfSocketID: [{ "client": "dsfdf" }, { "client": "dsfdf" }, { "admin": "dsfdf" }],
+        //   };
+            dispatch(setChatRooms(user, message));      
+             dispatch(setMessageReceived(true));  
+             audio.play();
+          })
+          socket.on("disconnected", ({reason, socketId}) => {
+            //   console.log(socketId, reason)
+            dispatch(removeChatRoom(socketId));
+          })
+          return () => socket.disconnect();
+      }
+  },[userInfo.isAdmin])
+
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="dark" style={{ background: 'linear-gradient(90deg, hsla(300, 43%, 8%, 1) 0%, hsla(210, 72%, 49%, 1) 71%, hsla(206, 5%, 28%, 1) 100%)', color: "white" }}>
       <Container>
         <LinkContainer to="/">
-          {/* navigates to main page without reloading the main page */}
-          <Navbar.Brand href="/">Last-Call</Navbar.Brand>
+          <Navbar.Brand href="/">Last Call</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <InputGroup>
-              <DropdownButton id="dropdown-basic-button" title="All">
-                <Dropdown.Item>Fruits</Dropdown.Item>
-                <Dropdown.Item>Vegetables</Dropdown.Item>
-                <Dropdown.Item>Fast Food</Dropdown.Item>
-                <Dropdown.Item>International Food</Dropdown.Item>
-                <Dropdown.Item>Other Products</Dropdown.Item>
+              <DropdownButton id="dropdown-basic-button" title={searchCategoryToggle}>
+                  <Dropdown.Item onClick={() => setSearchCategoryToggle("All")}>All</Dropdown.Item>
+                {categories.map((category, id) => (
+                  <Dropdown.Item key={id} onClick={() => setSearchCategoryToggle(category.name)}>{category.name}</Dropdown.Item>
+                ))}
               </DropdownButton>
-
-              <Form.Control type="text" placeholder="Search for products...." />
-              <Button variant="warning">
+              <Form.Control onKeyUp={submitHandler} onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder="Search in shop ..." />
+              <Button onClick={submitHandler} variant="warning">
                 <i className="bi bi-search text-dark"></i>
               </Button>
             </InputGroup>
           </Nav>
           <Nav>
-            <LinkContainer to="/admin/orders">
-              <Nav.Link>
-                Admin
-                <span className="position-absolute top-1 start-10 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
-              </Nav.Link>
-            </LinkContainer>
-
-            <NavDropdown title="Priti" id="collasible-nav-dropdown">
-              <NavDropdown.Item
-                eventKey="/user/my-orders"
-                as={Link}
-                to="/user/my-orders"
+            {userInfo.isAdmin ? (
+              <LinkContainer to="/admin/orders">
+                <Nav.Link>
+                  Admin
+                  {messageReceived && <span className="position-absolute top-1 start-10 translate-middle p-2 bg-danger border border-light rounded-circle"></span>}
+                  
+                </Nav.Link>
+              </LinkContainer>
+            ) : userInfo.name && !userInfo.isAdmin ? (
+              <NavDropdown
+                title={`${userInfo.name} ${userInfo.lastName}`}
+                id="collasible-nav-dropdown"
               >
-                My Orders
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey="/user" as={Link} to="/user">
-                My Profile
-              </NavDropdown.Item>
-              <NavDropdown.Item>Logout</NavDropdown.Item>
-            </NavDropdown>
-            <LinkContainer to="/login">
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/register">
-              <Nav.Link>Register</Nav.Link>
-            </LinkContainer>
+                <NavDropdown.Item
+                  eventKey="/user/my-orders"
+                  as={Link}
+                  to="/user/my-orders"
+                >
+                  My orders
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="/user" as={Link} to="/user">
+                  My profile
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => dispatch(logout())}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <>
+                <LinkContainer to="/login">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/register">
+                  <Nav.Link>Register</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
+
             <LinkContainer to="/cart">
               <Nav.Link>
                 <Badge pill bg="danger">
-                  3
+                  {itemsCount === 0 ? "" : itemsCount}
                 </Badge>
                 <i className="bi bi-cart-dash"></i>
                 <span className="ms-1">CART</span>

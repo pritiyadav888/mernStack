@@ -18,7 +18,8 @@ const getOrder = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
-};
+}
+
 const createOrder = async (req, res, next) => {
     try {
         const { cartItems, orderTotal, paymentMethod } = req.body;
@@ -52,7 +53,8 @@ const createOrder = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
-};
+}
+
 const updateOrderToPaid = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id).orFail();
@@ -65,7 +67,8 @@ const updateOrderToPaid = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-};
+}
+
 const updateOrderToDelivered = async (req, res, next) => {
     try {
        const order = await Order.findById(req.params.id).orFail();
@@ -76,7 +79,8 @@ const updateOrderToDelivered = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-};
+}
+
 const getOrders = async (req, res, next) => {
     try {
         const orders = await Order.find({}).populate("user","-password").sort({ paymentMethod: "desc" });
@@ -84,7 +88,7 @@ const getOrders = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
-};
+}
 
 const getOrderForAnalysis = async (req, res, next) => {
     try {
@@ -104,6 +108,6 @@ const getOrderForAnalysis = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
-};
+}
 
-module.exports = {getUserOrders, getOrder,createOrder,updateOrderToPaid,updateOrderToDelivered,getOrders,getOrderForAnalysis}
+module.exports = {getUserOrders, getOrder, createOrder, updateOrderToPaid, updateOrderToDelivered, getOrders, getOrderForAnalysis}

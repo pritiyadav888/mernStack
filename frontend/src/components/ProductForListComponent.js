@@ -1,24 +1,31 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
+import { Rating } from "react-simple-star-rating";
 import { LinkContainer } from "react-router-bootstrap";
-const ProductForListComponent = ({images,idx}) => {
+
+const ProductForListComponent = ({ productId, name, description, price, images, rating, reviewsNumber }) => {
   return (
     <Card style={{ marginTop: "30px", marginBottom: "50px" }}>
       <Row>
         <Col lg={5}>
-          <Card.Img style={{height:"300px" , objectFit:"cover"}} variant="top" src={"/images/" + images[idx] + "-category.jpg"} />
+          <Card.Img
+            crossOrigin="anonymous"
+            variant="top"
+            src={images[0] ? images[0].path : ''}
+          />
         </Col>
         <Col lg={7}>
           <Card.Body>
-            <Card.Title>Product Name</Card.Title>
+            <Card.Title>{name}</Card.Title>
             <Card.Text>
-              Product Description Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Magni ipsa ducimus architecto explicabo id
-              accusantium nihil exercitationem autem porro esse.
+              {description}
+            </Card.Text>
+            <Card.Text>
+              <Rating readonly size={20} initialValue={rating} /> ({reviewsNumber})
             </Card.Text>
             <Card.Text className="h4">
-              $7.99{" "}
-              <LinkContainer to="/product-details">
-                <Button variant="danger">Details</Button>
+              ${price}{" "}
+              <LinkContainer to={`/product-details/${productId}`}>
+                <Button variant="danger">See product</Button>
               </LinkContainer>
             </Card.Text>
           </Card.Body>

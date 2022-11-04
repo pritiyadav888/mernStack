@@ -1,14 +1,12 @@
-import {Outlet} from 'react-router-dom';
-import UserChatComponent from './UserChatComponents';
-const RoutesWithUserChatComponent = () =>{
-    return(
-        <>
-        <UserChatComponent/><Outlet/>
-       </>
-    );
-   
-    
+import { Outlet } from "react-router-dom";
+import UserChatComponent from "./UserChatComponent";
 
-}
+const RoutesWithUserChatComponent = () => {
+  return (
+    <>
+      <UserChatComponent /> <Outlet />
+    </>
+  );
+};
 
-export default RoutesWithUserChatComponent
+export default RoutesWithUserChatComponent;

@@ -3,27 +3,28 @@ const ObjectId = require("mongodb").ObjectId
 const reviews = [
     {
     comment: "Review. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni ipsa ducimus architecto explicabo id accusantium nihil exercitationem autem porro esse.",
-    user: { _id: ObjectId(), name: "Rashmi Bisht" },
+    rating: 5,
+    user: { _id: ObjectId(), name: "John Smith" },
   },
   {
     comment: "Review. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni ipsa ducimus architecto explicabo id accusantium nihil exercitationem autem porro esse.",
-    user: { _id: ObjectId(), name: "Surbhi Koli" },
+    rating: 5,
+    user: { _id: ObjectId(), name: "John Smith" },
   },
   {
     comment: "Review. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni ipsa ducimus architecto explicabo id accusantium nihil exercitationem autem porro esse.",
-    user: { _id: ObjectId(), name: "Ashish Yadav" },
+    rating: 5,
+    user: { _id: ObjectId(), name: "John Smith" },
   },
   {
     comment: "Review. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni ipsa ducimus architecto explicabo id accusantium nihil exercitationem autem porro esse.",
-    user: { _id: ObjectId(), name: "Dhwani Aggarwal" },
+    rating: 4,
+    user: { _id: ObjectId(), name: "John Smith" },
   },
   {
     comment: "Review. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni ipsa ducimus architecto explicabo id accusantium nihil exercitationem autem porro esse.",
-    user: { _id: ObjectId(), name: "Hina Negi" },
-  },
-  {
-    comment: "Review. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni ipsa ducimus architecto explicabo id accusantium nihil exercitationem autem porro esse.",
-    user: { _id: ObjectId(), name: "Navanpreet Kaur" },
+    rating: 3,
+    user: { _id: ObjectId(), name: "John Smith" },
   },
 ]
 
