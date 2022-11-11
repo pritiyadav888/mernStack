@@ -16,6 +16,7 @@ import { useEffect, useState, useRef } from "react";
 import MetaComponent from "../../components/MetaComponent";
 
 import { useParams } from "react-router-dom";
+import GoogleMaps from "../../utils/GoogleMaps";
 
 const ProductDetailsPageComponent = ({
   addToCartReduxAction,
@@ -178,7 +179,16 @@ const ProductDetailsPageComponent = ({
                     </ListGroup.Item>
                   </ListGroup>
                 </Col>
+               
+                <Row className="mt-5">
+                <h5>Store Location</h5>
+                <div className="mr-12">
+                <GoogleMaps address="941 Progress Ave, Scarborough, ON M1G 3T8" />
+                </div>
+              
+                </Row>
               </Row>
+           
               <Row>
                 <Col className="mt-5">
                   <h5>REVIEWS</h5>
