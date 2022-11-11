@@ -2,6 +2,7 @@ import ProductCarouselComponent from "../../components/ProductCarouselComponent"
 import CategoryCardComponent from "../../components/CategoryCardComponent";
 import { Row, Container } from "react-bootstrap";
 
+
 import { useEffect, useState } from "react";
 import MetaComponent from "../../components/MetaComponent";
 
@@ -32,6 +33,7 @@ const HomePageComponent = ({ categories, getBestsellers }) => {
           {mainCategories.map((category, idx) => (
             <CategoryCardComponent key={idx} category={category} idx={idx} />
           ))}
+         
         </Row>
         {error}
       </Container>
