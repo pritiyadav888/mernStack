@@ -14,7 +14,6 @@ const HomePage = () => {
 
   return (
   <div>
-    <GoogleMaps address={"15 Roehampton Ave, Toronto, ON M4P 0C2"}/>
     <HomePageComponent categories={categories} getBestsellers={getBestsellers} />
   </div>
   );
