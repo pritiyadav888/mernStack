@@ -14,6 +14,8 @@ import ProductListPage from "./pages/ProductListPage";
 import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import QRScanPage from "./pages/QRScanPage";
+
 
 import ProtectedRoutesComponent from "./components/ProtectedRoutesComponent";
 
@@ -56,6 +58,8 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/qrscan" element={<QRScanPage />} />
+
           <Route path="*" element="Page not exists 404" />
         </Route>
         {/* <Route path="/" component={HomePage} />  in previous versions of react-router-dom */}

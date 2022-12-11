@@ -120,6 +120,9 @@ const HeaderComponent = () => {
                 <NavDropdown.Item eventKey="/user" as={Link} to="/user">
                   My profile
                 </NavDropdown.Item>
+                <NavDropdown.Item eventKey="/qrscan" as={Link} to="/qrscan">
+                  QR scanner
+                </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => dispatch(logout())}>
                   Logout
                 </NavDropdown.Item>

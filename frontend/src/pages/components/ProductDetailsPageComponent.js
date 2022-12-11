@@ -18,6 +18,9 @@ import MetaComponent from "../../components/MetaComponent";
 import { useParams } from "react-router-dom";
 import GoogleMaps from "../../utils/GoogleMaps";
 
+import QRCode from 'qrcode';
+import {makeStyles} from "@material-ui/core";
+
 const ProductDetailsPageComponent = ({
   addToCartReduxAction,
   reduxDispatch,
@@ -35,10 +38,15 @@ const ProductDetailsPageComponent = ({
 
   const messagesEndRef = useRef(null);
 
+  const [imageUrl, setImageUrl] = useState('');
+
+  const classes = useStyles();
+
   const addToCartHandler = () => {
     reduxDispatch(addToCartReduxAction(id, quantity));
     setShowCartMessage(true);
   };
+  
 
   useEffect(() => {
     if (productReviewed) {
@@ -97,6 +105,16 @@ const ProductDetailsPageComponent = ({
      }
   }
 
+  const generateQrCode = async () => {
+    try {
+          const itemLink = window.location.origin;
+          const response = await QRCode.toDataURL(itemLink+'/product-details/'+id);
+          setImageUrl(response);
+    }catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
       <>
       <MetaComponent title={product.name} description={product.description}/>
@@ -147,6 +165,17 @@ const ProductDetailsPageComponent = ({
                       Price <span className="fw-bold">${product.price}</span>
                     </ListGroup.Item>
                     <ListGroup.Item>{product.description}</ListGroup.Item>
+                    <ListGroup.Item>
+                    <Button className={classes.btn} variant="primary" 
+                            color="primary" onClick={() => generateQrCode()}>Generate QR code for {product.name}</Button>
+                           
+                           
+                    </ListGroup.Item>
+                    <ListGroup.Item> {imageUrl ? (
+                              <a href={imageUrl} download>
+                                  <img src={imageUrl} alt="img"/>
+                              </a>) : null}</ListGroup.Item>
+                  
                   </ListGroup>
                 </Col>
                 <Col md={4}>
@@ -240,5 +269,22 @@ const ProductDetailsPageComponent = ({
     
   );
 };
+
+
+const useStyles = makeStyles((theme) => ({
+  
+  title: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems:  'center',
+    background: '#3f51b5',
+    color: '#fff',
+    padding: 20
+  },
+  btn : {
+    marginTop: 10,
+    marginBottom: 20
+  }
+}));
 
 export default ProductDetailsPageComponent;
